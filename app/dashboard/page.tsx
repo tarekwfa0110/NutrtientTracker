@@ -260,6 +260,49 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
+        
+        <div className="grid gap-4 md:grid-cols-2">
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Body Nutrient Status</CardTitle>
+              <CardDescription>3D visualization of your nutrient levels</CardDescription>
+            </CardHeader>
+            <CardContent className="h-[400px]">
+              <BodyModelViewer 
+                userData={mockUserData}
+                nutrients={nutrients}
+              />
+            </CardContent>
+          </Card>
+          
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Nutrient Overview</CardTitle>
+              <CardDescription>Your current nutrient levels</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {Object.entries(nutrients.current).map(([nutrient, value]) => (
+                  <div key={nutrient} className="flex items-center justify-between">
+                    <div className="capitalize">{nutrient}</div>
+                    <div className="flex items-center gap-2">
+                      <div>{value} / {nutrients.target[nutrient]}</div>
+                      <div 
+                        className={`h-2 w-20 rounded-full ${
+                          (value / nutrients.target[nutrient]) > 0.7 
+                            ? 'bg-green-500' 
+                            : (value / nutrients.target[nutrient]) > 0.4 
+                            ? 'bg-yellow-500' 
+                            : 'bg-red-500'
+                        }`}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )

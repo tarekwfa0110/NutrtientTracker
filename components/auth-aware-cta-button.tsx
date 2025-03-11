@@ -4,25 +4,37 @@ import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useLoading } from "@/context/LoadingContext"; // Adjust the path as necessary
+import { useLoading } from "@/context/LoadingContext";
 import LoadingIndicator from "@/components/ui/LoadingIndicator";
+import { useEffect } from "react";
 
 export function AuthAwareCTAButton() {
   const { isLoaded, isSignedIn } = useAuth();
   const { setLoading } = useLoading();
   
+  // Use useEffect to update loading state when auth state changes
+  useEffect(() => {
+    if (!isLoaded) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+    
+    // Cleanup function to reset loading state
+    return () => {
+      setLoading(false);
+    };
+  }, [isLoaded, setLoading]);
+  
   const href = isSignedIn ? "/dashboard" : "/sign-up";
   
   if (!isLoaded) {
-    setLoading(true); // Set loading state
     return (
       <Button className="group" disabled>
         <LoadingIndicator />
       </Button>
     );
   }
-
-  setLoading(false); // Reset loading state
 
   return (
     <Link href={href}>

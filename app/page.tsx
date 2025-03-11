@@ -16,7 +16,7 @@ export default function Home() {
           <div className="ml-auto flex items-center space-x-4">
             <SignedIn>
               <UserButton />
-              <SignOutButton />
+
             </SignedIn>
             <SignedOut>
               <Link href="/sign-in">
@@ -54,7 +54,7 @@ export default function Home() {
                   </div>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <img
-                      src="/placeholder.svg?height=280&width=280"
+                      src="/nutrient-visualization.svg"
                       alt="3D Nutrient Visualization"
                       className="h-[280px] w-[280px] rounded-full object-cover"
                     />
