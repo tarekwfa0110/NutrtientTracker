@@ -1,3 +1,5 @@
+"use client"
+
 import { SignIn } from "@clerk/nextjs";
 import Image from "next/image";
 
@@ -24,27 +26,26 @@ export default function SignInPage() {
         <SignIn 
           appearance={{
             elements: {
-              formButtonPrimary: 
-                "bg-green-500 hover:bg-green-600 text-sm normal-case",
-              card: "bg-zinc-800 border border-zinc-700 shadow-xl",
-              headerTitle: "text-zinc-200",
+              rootBox: "mx-auto",
+              card: "bg-zinc-900 border-zinc-800",
+              headerTitle: "text-white",
               headerSubtitle: "text-zinc-400",
-              socialButtonsBlockButton: 
-                "bg-zinc-700 border border-zinc-600 hover:bg-zinc-600",
-              socialButtonsBlockButtonText: "text-zinc-200 font-normal",
-              dividerLine: "bg-zinc-600",
-              dividerText: "text-zinc-400",
+              socialButtonsBlockButton: "bg-zinc-800 text-white hover:bg-zinc-700",
+              formButtonPrimary: "bg-blue-600 hover:bg-blue-700",
+              footerActionLink: "text-blue-500 hover:text-blue-400",
+              formFieldInput: "bg-zinc-800 border-zinc-700 text-white",
               formFieldLabel: "text-zinc-400",
-              formFieldInput: 
-                "bg-zinc-900 border-zinc-700 text-zinc-200 focus:border-green-500 focus:ring-green-500",
-              footerActionLink: "text-green-500 hover:text-green-400",
-              identityPreviewText: "text-zinc-200",
-              identityPreviewEditButton: 
-                "text-zinc-400 hover:text-zinc-300",
+              identityPreview: "bg-zinc-800 border-zinc-700",
+              identityPreviewText: "text-white",
+              identityPreviewEditButton: "text-blue-500 hover:text-blue-400",
             },
-            layout: {
-              socialButtonsPlacement: "top",
-              showOptionalFields: false,
+            variables: {
+              colorPrimary: "#3b82f6",
+              colorText: "#ffffff",
+              colorTextSecondary: "#a1a1aa",
+              colorBackground: "#18181b",
+              colorInputBackground: "#27272a",
+              colorInputText: "#ffffff",
             },
           }}
         />
