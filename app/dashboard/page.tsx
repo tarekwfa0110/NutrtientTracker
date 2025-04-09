@@ -18,9 +18,12 @@ import { FamilyGroupTracking } from "@/components/family-group-tracking"
 import { SymptomTrackerCorrelation } from "@/components/symptom-tracker-correlation"
 import { useUser } from "@clerk/nextjs"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function DashboardPage() {
-  const { user } = useUser()
+  const { user, isLoaded } = useUser()
+  const router = useRouter()
+  const [isGuest, setIsGuest] = useState(false)
   const [showFoodLogger, setShowFoodLogger] = useState(false)
   const [nutrients, setNutrients] = useState({
     current: {
@@ -63,6 +66,17 @@ export default function DashboardPage() {
   const [mealHistory, setMealHistory] = useState<any[]>([])
 
   useEffect(() => {
+    if (!isLoaded) return
+    
+    // Check if user is a guest
+    const guestStatus = localStorage.getItem("isGuest")
+    if (guestStatus === "true") {
+      setIsGuest(true)
+    } else if (!user) {
+      // If not a guest and not signed in, redirect to intro
+      router.push("/intro")
+    }
+
     // Fetch user's nutrient data
     // This is where you'd normally make an API call
     // For now, we'll use the mock data
@@ -98,13 +112,26 @@ export default function DashboardPage() {
       },
     ]
     setMealHistory(mockMealHistory)
-  }, [])
+  }, [isLoaded, user, router])
 
   return (
     <div className="container py-8">
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold">Welcome back, {user?.firstName || "User"}</h1>
+          <h1 className="text-3xl font-bold">
+            Welcome back, {isGuest ? "Guest" : user?.firstName || "User"}
+          </h1>
+          {isGuest && (
+            <div className="mt-2 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+              <p className="text-yellow-500">
+                You are using the app as a guest. Some features may be limited.{" "}
+                <Link href="/sign-up" className="underline hover:text-yellow-400">
+                  Sign up
+                </Link>{" "}
+                to unlock all features.
+              </p>
+            </div>
+          )}
           <p className="text-muted-foreground">
             Track your nutrition, analyze your diet, and achieve your health goals.
           </p>

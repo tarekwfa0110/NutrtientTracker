@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { TestTube } from "lucide-react"
+import { GuestLoginButton } from "@/components/guest-login-button"
 
 interface CTASectionProps {
   onNext: () => void
@@ -120,7 +121,7 @@ export function CTASection({ onNext }: CTASectionProps) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="flex justify-center"
+          className="flex flex-col items-center gap-4"
         >
           <Button
             onClick={handleClick}
@@ -132,6 +133,17 @@ export function CTASection({ onNext }: CTASectionProps) {
             </span>
             <span className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
           </Button>
+          
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-700"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-black text-gray-400">OR</span>
+            </div>
+          </div>
+
+          <GuestLoginButton />
         </motion.div>
 
         <motion.p
